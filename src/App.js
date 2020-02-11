@@ -1,8 +1,11 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Texto from "./Texto";
 
 function App() {
+
+  const mensajes = ["Lorem ipsum", "Dolor", "Sit amet"];
   return (
     <div className="App">
       <header className="App-header">
@@ -16,7 +19,10 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Rigoberta Menchú
+          {
+            mensajes.map((pal,index) => <Texto key={index} msg={pal}/>)
+          }
+          
         </a>
       </header>
     </div>

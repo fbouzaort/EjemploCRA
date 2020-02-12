@@ -18,12 +18,11 @@ function App() {
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
-        >
-          {
-            mensajes.map((pal,index) => <Texto key={index} msg={pal}/>)
-          }
-          
+          >
         </a>
+        {
+          mensajes.map((pal,index) => <Texto key={index} msg={pal}/>)
+        }
       </header>
     </div>
   );

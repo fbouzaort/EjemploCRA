@@ -3,30 +3,36 @@ import Tarea from './components/Tarea'
 import "./App.scss";
 
 class App extends Component {
+  
+  // No necesito poner el constuctor con props, porque es innecesario.
   state = {
     nombreTarea: "",
-    tareas: [
-      { nombre: "Secar la ropa" },
-      { nombre: "Odiar a Gervaz" },
-      { nombre: "Pedirle disculpas a Gervaz" },
-      { nombre: "Intentar mantener mi trabajo" },
-    ],
+    tareas: [],
   };
 
+  // En lugar de recibir al evento e, lo desestructuro para quedarme con e.target.value
   changeNombreTarea = ({ target: { value } }) => {
+    // this.setState es asíncrono. Recibe un json y actualiza el valor
+    //    de las variables que tiene como claves
     this.setState({ nombreTarea: value });
   };
 
   agregarTarea = () => {
+    // Recordar siempre desestructurar tanto al state como a las props
+    //    al comienzo de los métodos
     const { nombreTarea, tareas } = this.state;
+    // entrará si nombre tarea no es undefined, false, null, 0, "", "0"...
     if (nombreTarea) {
       const nuevaTarea = { nombre: nombreTarea };
+      // setState puede recibir más de una pareja clave-valor!
       this.setState({ nombreTarea: "", tareas: [...tareas, nuevaTarea] });
     }
   };
 
   render() {
     const { nombreTarea, tareas } = this.state;
+    // Recordar que sobre los input de tipo texto, debemos tener una variable
+    //    en el estado y un onChange para cada uno de ellos!
 
     return (
       <div className="App">
@@ -49,6 +55,10 @@ class App extends Component {
           />
         </div>
         <div className="grupoTareas">
+          {/* Recordar agregar un key a cada elemento raíz del
+                map. Tip: usar index! Si el elemento ya tiene un id,
+                usar el propio id del elemento
+          */}
           {tareas.map((tarea, index) => (
             <Tarea key={index} tarea={tarea}/>
           ))}

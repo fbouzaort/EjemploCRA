@@ -29,6 +29,13 @@ class App extends Component {
     }
   };
 
+  borrarTarea = (nombre) => {
+    const { tareas } = this.state;
+    // const tareasFiltradas = tareas.filter(({nombre: nombreTarea}) => nombreTarea !== nombre);
+    const tareasFiltradas = tareas.filter(tarea => tarea.nombre !== nombre);
+    this.setState({ tareas: tareasFiltradas });
+  }
+
   render() {
     const { nombreTarea, tareas } = this.state;
     // Recordar que sobre los input de tipo texto, debemos tener una variable
@@ -59,9 +66,15 @@ class App extends Component {
                 map. Tip: usar index! Si el elemento ya tiene un id,
                 usar el propio id del elemento
           */}
-          {tareas.map((tarea, index) => (
-            <Tarea key={index} tarea={tarea}/>
-          ))}
+          {
+            tareas.length === 0
+            ?
+            <p>No hay ninguna tarea. Arrancá pa' las 8hs.</p>
+            :
+            tareas.map((tarea, index) => (
+              <Tarea key={index} tarea={tarea} handleRemoval={this.borrarTarea}/>
+            ))
+          }
         </div>
       </div>
     );

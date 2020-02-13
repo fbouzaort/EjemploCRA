@@ -1,31 +1,61 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Texto from "./Texto";
+import React, { Component } from "react";
+import Tarea from './components/Tarea'
+import "./App.scss";
 
-function App() {
+class App extends Component {
+  state = {
+    nombreTarea: "",
+    tareas: [
+      { nombre: "Secar la ropa" },
+      { nombre: "Odiar a Gervaz" },
+      { nombre: "Pedirle disculpas a Gervaz" },
+      { nombre: "Intentar mantener mi trabajo" },
+    ],
+  };
 
-  const mensajes = ["Lorem ipsum", "Dolor", "Sit amet"];
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-          >
-        </a>
-        {
-          mensajes.map((pal,index) => <Texto key={index} msg={pal}/>)
-        }
-      </header>
-    </div>
-  );
+  changeNombreTarea = ({ target: { value } }) => {
+    this.setState({ nombreTarea: value });
+  };
+
+  agregarTarea = () => {
+    const { nombreTarea, tareas } = this.state;
+    if (nombreTarea) {
+      const nuevaTarea = { nombre: nombreTarea };
+      this.setState({ nombreTarea: "", tareas: [...tareas, nuevaTarea] });
+    }
+  };
+
+  render() {
+    const { nombreTarea, tareas } = this.state;
+
+    return (
+      <div className="App">
+        <header className="App-header">
+          <p>To-Do List!</p>
+        </header>
+        <div className="agregarTarea">
+          <input
+            className="agregarTarea-texto"
+            type="text"
+            placeholder="Ingrese la descripción de la tarea..."
+            value={nombreTarea}
+            onChange={this.changeNombreTarea}
+          />
+          <input
+            className="agregarTarea-boton"
+            type="button"
+            value="Agregar Tarea"
+            onClick={this.agregarTarea}
+          />
+        </div>
+        <div className="grupoTareas">
+          {tareas.map((tarea, index) => (
+            <Tarea key={index} tarea={tarea}/>
+          ))}
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;

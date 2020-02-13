@@ -72,7 +72,7 @@ class App extends Component {
             <p>No hay ninguna tarea. Arrancá pa' las 8hs.</p>
             :
             tareas.map((tarea, index) => (
-              <Tarea key={index} tarea={tarea} handleRemoval={this.borrarTarea}/>
+              <Tarea key={index} tarea={tarea} borrarTarea={this.borrarTarea}/>
             ))
           }
         </div>

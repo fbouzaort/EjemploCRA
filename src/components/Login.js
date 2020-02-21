@@ -5,7 +5,9 @@ import '../styles/login.scss';
 const Login = ({ history }) => {
 
   const [state, setState] = useState({
-   
+    email: '',
+    password: '',
+    errorMsg:'',
   });
 
   const { email, password, errorMsg } = state;
@@ -32,7 +34,6 @@ const Login = ({ history }) => {
   // const handlePasswordChange = ({ target: { value } }) => {
   //   setPassword(value);
   // }
-
 
   const handleSubmit = (event) => {
     event.preventDefault();

@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import Tarea from './Tarea';
 
 class ManejoTareas extends Component {
+
+  componentWillMount(){
+    debugger;
+    if(sessionStorage.getItem("usuarioLogueado") !== "1")
+    {
+      this.props.history.push("/login");
+    }
+  }
+
   // No necesito poner el constuctor con props, porque es innecesario.
   state = {
     nombreTarea: '',
@@ -74,4 +84,4 @@ class ManejoTareas extends Component {
   }
 }
 
-export default ManejoTareas;
+export default withRouter(ManejoTareas);

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Tarea from './Tarea';
+import { addTask } from '../redux/actions/taskActions';
 
 class ManejoTareas extends Component {
 
@@ -15,7 +17,6 @@ class ManejoTareas extends Component {
   // No necesito poner el constuctor con props, porque es innecesario.
   state = {
     nombreTarea: '',
-    tareas: [],
   };
 
   // En lugar de recibir al evento e, lo desestructuro para quedarme con e.target.value
@@ -28,24 +29,30 @@ class ManejoTareas extends Component {
   agregarTarea = () => {
     // Recordar siempre desestructurar tanto al state como a las props
     //    al comienzo de los métodos
-    const { nombreTarea, tareas } = this.state;
+    const { nombreTarea } = this.state;
+    const { addTask } = this.props;
     // entrará si nombre tarea no es undefined, false, null, 0, "", "0"...
     if (nombreTarea) {
       const nuevaTarea = { nombre: nombreTarea };
       // setState puede recibir más de una pareja clave-valor!
-      this.setState({ nombreTarea: '', tareas: [...tareas, nuevaTarea] });
+      addTask(nuevaTarea);
+      // this.setState({ nombreTarea: '', tareas: [...tareas, nuevaTarea] });
     }
   };
 
   borrarTarea = nombre => {
-    const { tareas } = this.state;
+    // const { tareas } = this.state;
     // const tareasFiltradas = tareas.filter(({nombre: nombreTarea}) => nombreTarea !== nombre);
-    const tareasFiltradas = tareas.filter(tarea => tarea.nombre !== nombre);
-    this.setState({ tareas: tareasFiltradas });
+
+    // TODO: ADAPTAR!
+    
+    // const tareasFiltradas = tareas.filter(tarea => tarea.nombre !== nombre);
+    // this.setState({ tareas: tareasFiltradas });
   };
 
   render() {
-    const { nombreTarea, tareas } = this.state;
+    const { nombreTarea } = this.state;
+    const { tareas } = this.props;
     // Recordar que sobre los input de tipo texto, debemos tener una variable
     //    en el estado y un onChange para cada uno de ellos!
 
@@ -84,4 +91,10 @@ class ManejoTareas extends Component {
   }
 }
 
-export default withRouter(ManejoTareas);
+const mapStateToProps = ({ tasks }) => ({
+  tareas: tasks.tasks,
+})
+
+const mapDispatchToProps = { addTask }
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ManejoTareas));
